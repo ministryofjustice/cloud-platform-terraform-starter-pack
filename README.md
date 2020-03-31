@@ -73,4 +73,4 @@ module "starter_pack_2" {
 | namespace                    | namespace where the app will be deployed                | string | | no |
 ## Outputs
 
-The module will deploy the Hello World ruby app (https://github.com/ministryofjustice/cloud-platform-helloworld-ruby-app) and Multi container demo app (https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app) in the namespace "starter-pack"
+The module will deploy the [Hello World ruby app] (https://github.com/ministryofjustice/cloud-platform-helloworld-ruby-app) and [Multi container demo app] (https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app) in the namespace "starter-pack"
