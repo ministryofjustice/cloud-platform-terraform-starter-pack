@@ -39,3 +39,9 @@ data "terraform_remote_state" "cluster" {
 }
 
 
+
+data "helm_repository" "cloud_platform" {
+  name = "cloud-platform"
+  url  = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
+}
+
