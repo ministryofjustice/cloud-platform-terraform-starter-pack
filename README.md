@@ -71,6 +71,7 @@ module "starter_pack_2" {
 | cluster_name                 | kubernetes cluster name where the app will be deployed  | string |  | yes |
 | cluster_state_bucket         | State bucket of the cluster                             | string | | yes |
 | namespace                    | namespace where the app will be deployed                | string | | no |
+| rds-secret                    | Name of the secret where RDS credentials are stored               | string | | no |
 ## Outputs
 
 The module will deploy the [Hello World ruby app] (https://github.com/ministryofjustice/cloud-platform-helloworld-ruby-app) and [Multi container demo app] (https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app) in the namespace "starter-pack"
