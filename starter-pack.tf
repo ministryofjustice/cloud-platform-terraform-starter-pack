@@ -82,7 +82,6 @@ resource "helm_release" "multi-container-app" {
     )
 
     postgres-enabled = var.enable_postgres_container
-
     postgres-secret = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
   })]
 

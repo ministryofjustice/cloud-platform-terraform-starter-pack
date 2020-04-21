@@ -9,4 +9,4 @@ ingress:
     - host: "${ multi-container-app-ingress }"
 
 postgresql:
-  enabled: "{ postgres-enabled }"
+  enabled: ${ postgres-enabled }
