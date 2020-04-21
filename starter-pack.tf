@@ -81,6 +81,8 @@ resource "helm_release" "multi-container-app" {
       data.terraform_remote_state.cluster.outputs.cluster_domain_name,
   )
   
+  postgres-enabled = var.enable_postgres_container
+
   postgres-secret = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
   })]
 
