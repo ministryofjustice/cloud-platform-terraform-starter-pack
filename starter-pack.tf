@@ -6,13 +6,13 @@ resource "helm_release" "helloworld" {
   chart      = "helloworld"
   repository = data.helm_repository.cloud_platform.metadata[0].name
   values = [templatefile("${path.module}/templates/helloworld.yaml.tpl", {
-      helloworld-ingress   = format(
+    helloworld-ingress = format(
       "%s-%s.%s.%s",
       "helloworld-app",
       var.namespace,
       "apps",
       data.terraform_remote_state.cluster.outputs.cluster_domain_name,
-  )
+    )
   })]
   lifecycle {
     ignore_changes = [keyring]
@@ -38,8 +38,8 @@ resource "kubernetes_secret" "container_postgres_secrets" {
   }
 
   data = {
-    postgresql-postgres-password  = random_password.adminpassword.result
-    postgresql-password = random_password.password.result
+    postgresql-postgres-password = random_password.adminpassword.result
+    postgresql-password          = random_password.password.result
   }
   type = "Opaque"
 }
@@ -73,15 +73,16 @@ resource "helm_release" "multi-container-app" {
   chart      = "multi-container-app"
   repository = data.helm_repository.cloud_platform.metadata[0].name
   values = [templatefile("${path.module}/templates/multi-container-app.yaml.tpl", {
-      multi-container-app-ingress   = format(
+    multi-container-app-ingress = format(
       "%s-%s.%s.%s",
       "multi-container-app",
       var.namespace,
       "apps",
       data.terraform_remote_state.cluster.outputs.cluster_domain_name,
-  )
-  
-  postgres-secret = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
+    )
+
+    postgres-enabled = var.enable_postgres_container
+    postgres-secret = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
   })]
 
   lifecycle {

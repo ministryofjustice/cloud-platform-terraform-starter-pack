@@ -5,17 +5,21 @@ variable "namespace" {
 
 variable "helloworld" {
   default = true
+  type = bool
 }
 
 variable "multi_container_app" {
   default = true
+  type = bool
 }
 variable "enable_postgres_container" {
-  default = true
+  default     = true
   description = "Enable postgres inside a container"
+  type = bool
 }
 
+
 variable "rds_secret" {
-  default = ""
+  default     = ""
   description = "kubernetes secret if using RDS for postgres"
 }
