@@ -5,6 +5,10 @@ variable "enable_starter_pack" {
   description = "Enable/Disable the whole module - all resources"
 }
 
+variable "cluster_domain_name" {
+  description = "The cluster domain used for externalDNS annotations and certmanager"
+}
+
 variable "enable_postgres_container" {
   default     = true
   description = "Enable postgres inside a container"

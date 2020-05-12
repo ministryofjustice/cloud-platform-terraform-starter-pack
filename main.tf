@@ -13,7 +13,7 @@ resource "kubernetes_namespace" "starter-pack" {
     name = var.namespace
 
     labels = {
-      "name" = var.name
+      "name" = var.namespace
     }
 
     annotations = {
@@ -48,8 +48,8 @@ resource "kubernetes_secret" "container_postgres_secrets" {
   }
 
   data = {
-    postgresql-postgres-password = random_password.adminpassword.result
-    postgresql-password          = random_password.password.result
+    postgresql-postgres-password = random_password.adminpassword.0.result
+    postgresql-password          = random_password.password.0.result
   }
   type = "Opaque"
 }
@@ -84,6 +84,7 @@ resource "helm_release" "helloworld" {
   namespace  = var.namespace
   chart      = "helloworld"
   repository = data.helm_repository.cloud_platform.metadata[0].name
+
   values = [templatefile("${path.module}/templates/helloworld.yaml.tpl", {
     helloworld-ingress = format(
       "%s-%s.%s.%s",
@@ -105,6 +106,7 @@ resource "helm_release" "multi-container-app" {
   namespace  = var.namespace
   chart      = "multi-container-app"
   repository = data.helm_repository.cloud_platform.metadata[0].name
+
   values = [templatefile("${path.module}/templates/multi-container-app.yaml.tpl", {
     multi-container-app-ingress = format(
       "%s-%s.%s.%s",
