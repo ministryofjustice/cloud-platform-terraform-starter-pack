@@ -91,7 +91,7 @@ resource "helm_release" "helloworld" {
       "helloworld-app",
       var.namespace,
       "apps",
-      data.terraform_remote_state.cluster.outputs.cluster_domain_name,
+      var.cluster_domain_name,
     )
   })]
   lifecycle {
@@ -113,7 +113,7 @@ resource "helm_release" "multi-container-app" {
       "multi-container-app",
       var.namespace,
       "apps",
-      data.terraform_remote_state.cluster.outputs.cluster_domain_name,
+      var.cluster_domain_name,
     )
 
     postgres-enabled = var.enable_postgres_container
