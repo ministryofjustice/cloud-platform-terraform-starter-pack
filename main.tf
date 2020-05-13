@@ -6,7 +6,7 @@ data "helm_repository" "cloud_platform" {
 
 # Namespace
 
-resource "kubernetes_namespace" "starter-pack" {
+resource "kubernetes_namespace" "starter_pack" {
   count = var.enable_starter_pack ? 1 : 0
 
   metadata {
@@ -81,7 +81,7 @@ resource "helm_release" "helloworld" {
   count = var.helloworld && var.enable_starter_pack ? 1 : 0
 
   name       = "helloworld"
-  namespace  = var.namespace
+  namespace  = kubernetes_namespace.starter_pack.0.id
   chart      = "helloworld"
   repository = data.helm_repository.cloud_platform.metadata[0].name
 
@@ -94,16 +94,17 @@ resource "helm_release" "helloworld" {
       var.cluster_domain_name,
     )
   })]
-  lifecycle {
-    ignore_changes = [keyring]
-  }
+
+  depends_on = [
+    var.dependence_deploy
+  ]
 }
 
-resource "helm_release" "multi-container-app" {
+resource "helm_release" "multi_container_app" {
   count = var.multi_container_app && var.enable_starter_pack ? 1 : 0
 
   name       = "multi-container-app"
-  namespace  = var.namespace
+  namespace  = kubernetes_namespace.starter_pack.0.id
   chart      = "multi-container-app"
   repository = data.helm_repository.cloud_platform.metadata[0].name
 
@@ -120,7 +121,8 @@ resource "helm_release" "multi-container-app" {
     postgres-secret  = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
   })]
 
-  lifecycle {
-    ignore_changes = [keyring]
-  }
+  depends_on = [
+    var.dependence_deploy
+  ]
+
 }
