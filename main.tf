@@ -81,7 +81,7 @@ resource "helm_release" "helloworld" {
   count = var.helloworld && var.enable_starter_pack ? 1 : 0
 
   name       = "helloworld"
-  namespace  = kubernetes_namespace.starter_pack.id
+  namespace  = kubernetes_namespace.starter_pack.0.id
   chart      = "helloworld"
   repository = data.helm_repository.cloud_platform.metadata[0].name
 
@@ -104,7 +104,7 @@ resource "helm_release" "multi_container_app" {
   count = var.multi_container_app && var.enable_starter_pack ? 1 : 0
 
   name       = "multi-container-app"
-  namespace  = kubernetes_namespace.starter_pack.id
+  namespace  = kubernetes_namespace.starter_pack.0.id
   chart      = "multi-container-app"
   repository = data.helm_repository.cloud_platform.metadata[0].name
 
