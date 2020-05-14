@@ -44,7 +44,7 @@ resource "kubernetes_secret" "container_postgres_secrets" {
 
   metadata {
     name      = "container-postgres-secrets"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.starter_pack.0.id
   }
 
   data = {
@@ -61,7 +61,7 @@ resource "kubernetes_secret" "postgresurl_secret" {
 
   metadata {
     name      = "postgresurl-secret"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.starter_pack.0.id
   }
 
   data = {
