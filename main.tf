@@ -84,6 +84,7 @@ resource "helm_release" "helloworld" {
   namespace  = kubernetes_namespace.starter_pack.0.id
   chart      = "helloworld"
   repository = data.helm_repository.cloud_platform.metadata[0].name
+  version   = "0.2.0"
 
   values = [templatefile("${path.module}/templates/helloworld.yaml.tpl", {
     helloworld-ingress = format(
@@ -103,7 +104,8 @@ resource "helm_release" "multi_container_app" {
   namespace  = kubernetes_namespace.starter_pack.0.id
   chart      = "multi-container-app"
   repository = data.helm_repository.cloud_platform.metadata[0].name
-
+  version   = "0.2.0"
+  
   values = [templatefile("${path.module}/templates/multi-container-app.yaml.tpl", {
     multi-container-app-ingress = format(
       "%s-%s.%s.%s",
