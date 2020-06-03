@@ -94,10 +94,6 @@ resource "helm_release" "helloworld" {
       var.cluster_domain_name,
     )
   })]
-
-  depends_on = [
-    var.dependence_deploy
-  ]
 }
 
 resource "helm_release" "multi_container_app" {
@@ -120,9 +116,4 @@ resource "helm_release" "multi_container_app" {
     postgres-enabled = var.enable_postgres_container
     postgres-secret  = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
   })]
-
-  depends_on = [
-    var.dependence_deploy
-  ]
-
 }

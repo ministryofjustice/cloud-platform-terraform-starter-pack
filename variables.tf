@@ -1,7 +1,3 @@
-variable "dependence_deploy" {
-  description = "Deploy Module dependence in order to be executed (deploy resource is the helm init)"
-}
-
 variable "enable_starter_pack" {
   type        = bool
   default     = true
