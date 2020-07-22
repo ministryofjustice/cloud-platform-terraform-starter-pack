@@ -35,3 +35,14 @@ variable "rds_secret" {
   type        = string
   description = "kubernetes secret if using RDS for postgres"
 }
+
+
+variable "helloworld_version" {
+  type    = string
+  default = "0.2.0"
+}
+
+variable "multi_container_app_version" {
+  type    = string
+  default = "0.3.0"
+}
