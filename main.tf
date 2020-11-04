@@ -7,13 +7,13 @@ data "helm_repository" "cloud_platform" {
 # Namespace
 
 resource "kubernetes_namespace" "starter_pack" {
-  count = var.enable_starter_pack ? 1 : 0
+  count = var.enable_starter_pack ? var.starter_pack_count : 0
 
   metadata {
-    name = var.namespace
+    name = "${var.namespace}-${count.index}"
 
     labels = {
-      "name" = var.namespace
+      "name" = "${var.namespace}-${count.index}"
     }
 
     annotations = {
@@ -26,25 +26,25 @@ resource "kubernetes_namespace" "starter_pack" {
 }
 
 resource "random_password" "adminpassword" {
-  count = var.enable_starter_pack ? 1 : 0
+  count = var.enable_starter_pack ? var.starter_pack_count : 0
 
   length  = 16
   special = false
 }
 
 resource "random_password" "password" {
-  count = var.enable_starter_pack ? 1 : 0
+  count = var.enable_starter_pack ? var.starter_pack_count : 0
 
   length  = 16
   special = false
 }
 
 resource "kubernetes_secret" "container_postgres_secrets" {
-  count = var.enable_postgres_container && var.enable_starter_pack ? 1 : 0
+  count = var.enable_postgres_container && var.enable_starter_pack ? var.starter_pack_count : 0
 
   metadata {
     name      = "container-postgres-secrets"
-    namespace = kubernetes_namespace.starter_pack.0.id
+    namespace = kubernetes_namespace.starter_pack.*.id[count.index]
   }
 
   data = {
@@ -55,13 +55,13 @@ resource "kubernetes_secret" "container_postgres_secrets" {
 }
 
 resource "kubernetes_secret" "postgresurl_secret" {
-  count = var.enable_postgres_container && var.enable_starter_pack ? 1 : 0
+  count = var.enable_postgres_container && var.enable_starter_pack ? var.starter_pack_count : 0
 
   type = "Opaque"
 
   metadata {
     name      = "postgresurl-secret"
-    namespace = kubernetes_namespace.starter_pack.0.id
+    namespace = kubernetes_namespace.starter_pack.*.id[count.index]
   }
 
   data = {
@@ -71,17 +71,17 @@ resource "kubernetes_secret" "postgresurl_secret" {
       "postgres",
       kubernetes_secret.container_postgres_secrets[count.index].data.postgresql-password,
       "multi-container-app-postgresql",
-      var.namespace,
+      "${var.namespace}-${count.index}",
       "svc.cluster.local:5432/multi_container_demo_app",
     )
   }
 }
 
 resource "helm_release" "helloworld" {
-  count = var.helloworld && var.enable_starter_pack ? 1 : 0
+  count = var.helloworld && var.enable_starter_pack ? var.starter_pack_count : 0
 
   name       = "helloworld"
-  namespace  = kubernetes_namespace.starter_pack.0.id
+  namespace  = kubernetes_namespace.starter_pack.*.id[count.index]
   chart      = "helloworld"
   repository = data.helm_repository.cloud_platform.metadata[0].name
   version   = var.helloworld_version
@@ -90,7 +90,7 @@ resource "helm_release" "helloworld" {
     helloworld-ingress = format(
       "%s-%s.%s.%s",
       "helloworld-app",
-      var.namespace,
+      "${var.namespace}-${count.index}",
       "apps",
       var.cluster_domain_name,
     )
@@ -98,10 +98,10 @@ resource "helm_release" "helloworld" {
 }
 
 resource "helm_release" "multi_container_app" {
-  count = var.multi_container_app && var.enable_starter_pack ? 1 : 0
+  count = var.multi_container_app && var.enable_starter_pack ? var.starter_pack_count : 0
 
   name       = "multi-container-app"
-  namespace  = kubernetes_namespace.starter_pack.0.id
+  namespace  = kubernetes_namespace.starter_pack.*.id[count.index]
   chart      = "multi-container-app"
   repository = data.helm_repository.cloud_platform.metadata[0].name
   version   = var.multi_container_app_version
@@ -110,7 +110,7 @@ resource "helm_release" "multi_container_app" {
     multi-container-app-ingress = format(
       "%s-%s.%s.%s",
       "multi-container-app",
-      var.namespace,
+      "${var.namespace}-${count.index}",
       "apps",
       var.cluster_domain_name,
     )
