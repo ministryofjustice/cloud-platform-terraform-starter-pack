@@ -32,7 +32,7 @@ module "starter_pack" {
 | rds_secret | RDS secret name if `enable_postgres_container` set to false and RDS is used for postgres | string | null | no |
 | helloworld_version | Helloworld app chart version | string | 0.2.0 | no |
 | multi_container_app_version | Multi container app chart version | string | 0.3.1 | no |
-| starter_pack_count | The number of starter pack needs to be created |    number | 1 | no | 
+| starter_pack_count | The number of starter pack needs to be created | number | 1 | no | 
 
 ## Outputs
 
