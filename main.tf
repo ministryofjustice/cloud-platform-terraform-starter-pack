@@ -40,7 +40,7 @@ resource "random_password" "password" {
 }
 
 resource "kubernetes_secret" "container_postgres_secrets" {
-  count = var.enable_postgres_container && var.enable_starter_pack ? var.starter_pack_count : 0
+  count = var.enable_postgres_container && var.multi_container_app && var.enable_starter_pack ? var.starter_pack_count : 0
 
   metadata {
     name      = "container-postgres-secrets"
@@ -55,7 +55,7 @@ resource "kubernetes_secret" "container_postgres_secrets" {
 }
 
 resource "kubernetes_secret" "postgresurl_secret" {
-  count = var.enable_postgres_container && var.enable_starter_pack ? var.starter_pack_count : 0
+  count = var.enable_postgres_container && var.multi_container_app && var.enable_starter_pack ? var.starter_pack_count : 0
 
   type = "Opaque"
 
