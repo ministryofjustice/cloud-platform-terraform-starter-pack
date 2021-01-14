@@ -36,17 +36,6 @@ variable "rds_secret" {
   description = "kubernetes secret if using RDS for postgres"
 }
 
-
-variable "helloworld_version" {
-  type    = string
-  default = ""
-}
-
-variable "multi_container_app_version" {
-  type    = string
-  default = ""
-}
-
 variable "starter_pack_count" {
   type = number
   default = 1

@@ -30,8 +30,6 @@ module "starter_pack" {
 | helloworld | Enable helloworld app in the starter pack | bool | true | no |
 | multi_container_app | Enable MultiContainer app in starter pack | bool | true | no |
 | rds_secret | RDS secret name if `enable_postgres_container` set to false and RDS is used for postgres | string | null | no |
-| helloworld_version | Helloworld app chart version | string | null | yes |
-| multi_container_app_version | Multi container app chart version | string | null | yes |
 | starter_pack_count | The number of starter pack needs to be created | number | 1 | no | 
 
 ## Outputs
