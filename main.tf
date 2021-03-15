@@ -1,9 +1,4 @@
 
-data "helm_repository" "cloud_platform" {
-  name = "cloud-platform"
-  url  = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
-}
-
 # Namespace
 
 resource "kubernetes_namespace" "starter_pack" {
@@ -83,7 +78,7 @@ resource "helm_release" "helloworld" {
   name       = "helloworld"
   namespace  = kubernetes_namespace.starter_pack.*.id[count.index]
   chart      = "helloworld"
-  repository = data.helm_repository.cloud_platform.metadata[0].name
+  repository = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
   version   = var.helloworld_version
 
   values = [templatefile("${path.module}/templates/helloworld.yaml.tpl", {
