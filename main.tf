@@ -98,8 +98,8 @@ resource "helm_release" "multi_container_app" {
   name       = "multi-container-app"
   namespace  = kubernetes_namespace.starter_pack.*.id[count.index]
   chart      = "multi-container-app"
-  repository = data.helm_repository.cloud_platform.metadata[0].name
-  version   = var.multi_container_app_version
+  repository = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
+  version    = var.multi_container_app_version
 
   values = [templatefile("${path.module}/templates/multi-container-app.yaml.tpl", {
     multi-container-app-ingress = format(
