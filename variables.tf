@@ -39,12 +39,12 @@ variable "rds_secret" {
 
 variable "helloworld_version" {
   type    = string
-  default = "0.2.0"
+  default = "0.2.2"
 }
 
 variable "multi_container_app_version" {
   type    = string
-  default = "0.3.2"
+  default = "0.3.4"
 }
 
 variable "starter_pack_count" {

@@ -5,6 +5,7 @@
 databaseUrlSecretName: "${ postgres-secret }"
                 
 ingress:
+  className: modsec
   hosts:
     - host: "${ multi-container-app-ingress }"
 
