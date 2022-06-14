@@ -3,5 +3,7 @@
 # Declare variables to be passed into your templates.
 
 ingress:
+  className: modsec
   hosts:
     - host: "${ helloworld-ingress }"
+  
