@@ -48,7 +48,7 @@ variable "multi_container_app_version" {
 }
 
 variable "starter_pack_count" {
-  type = number
-  default = 1
+  type        = number
+  default     = 1
   description = "The number of starter pack needs to be created"
 }
