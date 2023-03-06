@@ -39,7 +39,7 @@ resource "kubernetes_secret" "container_postgres_secrets" {
 
   metadata {
     name      = "container-postgres-secrets"
-    namespace = kubernetes_namespace.starter_pack[*].id[count.index]
+    namespace = kubernetes_namespace.starter_pack[count.index].id
   }
 
   data = {
@@ -56,7 +56,7 @@ resource "kubernetes_secret" "postgresurl_secret" {
 
   metadata {
     name      = "postgresurl-secret"
-    namespace = kubernetes_namespace.starter_pack[*].id[count.index]
+    namespace = kubernetes_namespace.starter_pack[count.index].id
   }
 
   data = {
@@ -76,7 +76,7 @@ resource "helm_release" "helloworld" {
   count = var.helloworld && var.enable_starter_pack ? var.starter_pack_count : 0
 
   name       = "helloworld"
-  namespace  = kubernetes_namespace.starter_pack[*].id[count.index]
+  namespace  = kubernetes_namespace.starter_pack[count.index].id
   chart      = "helloworld"
   repository = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
   version    = var.helloworld_version
@@ -96,7 +96,7 @@ resource "helm_release" "multi_container_app" {
   count = var.multi_container_app && var.enable_starter_pack ? var.starter_pack_count : 0
 
   name       = "multi-container-app"
-  namespace  = kubernetes_namespace.starter_pack[*].id[count.index]
+  namespace  = kubernetes_namespace.starter_pack[count.index].id
   chart      = "multi-container-app"
   repository = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
   version    = var.multi_container_app_version
