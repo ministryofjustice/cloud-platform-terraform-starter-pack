@@ -111,6 +111,9 @@ resource "helm_release" "multi_container_app" {
     )
 
     postgres-enabled = var.enable_postgres_container
-    postgres-secret  = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
   })]
+  set_sensitive {
+    name = "databaseUrlSecretName"
+    value = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
+  }
 }
