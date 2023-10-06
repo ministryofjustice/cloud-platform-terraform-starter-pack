@@ -9,6 +9,7 @@ resource "kubernetes_namespace" "starter_pack" {
 
     labels = {
       "name" = "${var.namespace}-${count.index}"
+      "pod-security.kubernetes.io/audit" = "restricted"
     }
 
     annotations = {
