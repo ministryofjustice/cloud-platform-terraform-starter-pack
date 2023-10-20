@@ -8,8 +8,8 @@ resource "kubernetes_namespace" "starter_pack" {
     name = "${var.namespace}-${count.index}"
 
     labels = {
-      "name" = "${var.namespace}-${count.index}"
-      "pod-security.kubernetes.io/audit" = "restricted"
+      "name"                               = "${var.namespace}-${count.index}"
+      "pod-security.kubernetes.io/enforce" = "restricted"
     }
 
     annotations = {
@@ -114,7 +114,7 @@ resource "helm_release" "multi_container_app" {
     postgres-enabled = var.enable_postgres_container
   })]
   set_sensitive {
-    name = "databaseUrlSecretName"
+    name  = "databaseUrlSecretName"
     value = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
   }
 }
