@@ -101,6 +101,7 @@ resource "helm_release" "multi_container_app" {
   chart      = "multi-container-app"
   repository = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
   version    = var.multi_container_app_version
+  timeout    = 600
 
   values = [templatefile("${path.module}/templates/multi-container-app.yaml.tpl", {
     multi-container-app-ingress = format(
