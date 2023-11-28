@@ -119,21 +119,3 @@ resource "helm_release" "multi_container_app" {
   }
 }
 
-
-resource "kubernetes_cluster_role_binding" "super_privileged_bypass" {
-  count = var.enable_starter_pack ? var.starter_pack_count : 0
-
-  metadata {
-    name = "starter-pack-${count.index}:0-super-privileged"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "psp:0-super-privileged"
-  }
-  subject {
-    kind      = "Group"
-    name      = "system:serviceaccounts:starter-pack-${count.index}"
-    api_group = "rbac.authorization.k8s.io"
-  }
-}
