@@ -93,6 +93,15 @@ resource "helm_release" "helloworld" {
   })]
 }
 
+resource "kubectl_manifest" "service-monitors" {
+  count = var.helloworld && var.enable_starter_pack ? var.starter_pack_count : 0
+
+  wait = true
+  yaml_body = templatefile("${path.module}/service-monitor.yaml.tpl", {
+    namespace = "${var.namespace}-${count.index}"
+  })
+}
+
 resource "helm_release" "multi_container_app" {
   count = var.multi_container_app && var.enable_starter_pack ? var.starter_pack_count : 0
 
