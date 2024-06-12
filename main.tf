@@ -102,29 +102,29 @@ resource "kubectl_manifest" "service-monitors" {
   })
 }
 
-resource "helm_release" "multi_container_app" {
-  count = var.multi_container_app && var.enable_starter_pack ? var.starter_pack_count : 0
+# resource "helm_release" "multi_container_app" {
+#   count = var.multi_container_app && var.enable_starter_pack ? var.starter_pack_count : 0
 
-  name       = "multi-container-app"
-  namespace  = kubernetes_namespace.starter_pack[count.index].id
-  chart      = "multi-container-app"
-  repository = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
-  version    = var.multi_container_app_version
+#   name       = "multi-container-app"
+#   namespace  = kubernetes_namespace.starter_pack[count.index].id
+#   chart      = "multi-container-app"
+#   repository = "https://ministryofjustice.github.io/cloud-platform-helm-charts"
+#   version    = var.multi_container_app_version
 
-  values = [templatefile("${path.module}/templates/multi-container-app.yaml.tpl", {
-    multi-container-app-ingress = format(
-      "%s-%s.%s.%s",
-      "multi-container-app",
-      "${var.namespace}-${count.index}",
-      "apps",
-      var.cluster_domain_name,
-    )
+#   values = [templatefile("${path.module}/templates/multi-container-app.yaml.tpl", {
+#     multi-container-app-ingress = format(
+#       "%s-%s.%s.%s",
+#       "multi-container-app",
+#       "${var.namespace}-${count.index}",
+#       "apps",
+#       var.cluster_domain_name,
+#     )
 
-    postgres-enabled = var.enable_postgres_container
-  })]
-  set_sensitive {
-    name  = "databaseUrlSecretName"
-    value = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
-  }
-}
+#     postgres-enabled = var.enable_postgres_container
+#   })]
+#   set_sensitive {
+#     name  = "databaseUrlSecretName"
+#     value = var.enable_postgres_container ? "postgresurl-secret" : var.rds_secret
+#   }
+# }
 
